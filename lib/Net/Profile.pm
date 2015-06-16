@@ -1,4 +1,6 @@
+# ABSTRACT: library to interact with API of social networks
 package Net::Profile;
+
 use Moose;
 use namespace::autoclean;
 use extreme;
@@ -89,3 +91,16 @@ sub build_userpic ($self) {
 }
 
 1;
+
+__END__
+
+=head1 SYNOPSIS
+
+    my $profile = Net::Profile::VK->new( access_token => '...' );
+    
+    say $profile->user_id;
+    say $profile->name;
+    say $profile->url;
+
+    my $userpic = $profile->userpic; # Imager object
+    $userpic->write( file => '/srv/foo/bar/userpic.png' );

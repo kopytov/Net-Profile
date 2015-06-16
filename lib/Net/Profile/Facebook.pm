@@ -1,4 +1,6 @@
+# ABSTRACT: library to interact with Facebook API
 package Net::Profile::Facebook;
+
 use Moose;
 use namespace::autoclean;
 use extreme;

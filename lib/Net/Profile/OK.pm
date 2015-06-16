@@ -1,4 +1,6 @@
+# ABSTRACT: library to interact with OK.ru API
 package Net::Profile::OK;
+
 use Moose;
 use namespace::autoclean;
 use extreme;

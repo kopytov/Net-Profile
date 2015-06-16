@@ -1,4 +1,6 @@
+# ABSTRACT: library to interact with VK.com API
 package Net::Profile::VK;
+
 use Moose;
 use namespace::autoclean;
 use extreme;
