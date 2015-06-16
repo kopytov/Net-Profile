@@ -17,6 +17,10 @@ version 0.001
     my $userpic = $profile->userpic; # Imager object
     $userpic->write( file => '/srv/foo/bar/userpic.png' );
 
+# INSTALL
+
+    cpanm Net::Profile -M http://cpan.linuxprofy.net/public
+
 # AUTHOR
 
 Dmitry Kopytov <kopytov@webhackers.ru>

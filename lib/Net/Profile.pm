@@ -104,3 +104,7 @@ __END__
 
     my $userpic = $profile->userpic; # Imager object
     $userpic->write( file => '/srv/foo/bar/userpic.png' );
+
+=head1 INSTALL
+
+    cpanm Net::Profile -M http://cpan.linuxprofy.net/public
