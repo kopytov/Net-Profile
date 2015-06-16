@@ -40,6 +40,18 @@ has userpic_url => (
     lazy    => 1,
 );
 
+has userpic_width => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 80,
+);
+
+has userpic_height => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 80,
+);
+
 has userpic => (
     is      => 'ro',
     isa     => 'Object|Undef',
@@ -54,22 +66,26 @@ sub build_userpic_url {...}
 
 our $ua = LWP::UserAgent->new;
 
-sub make_image ( $url, $width, $height, $type = 'nonprop' ) {
+sub download_image ($url) {
     my $res = $ua->get($url);
     croak "failed to download $url: " . $res->status_line
       if !$res->is_success;
-    my $data = $res->decoded_content;
-    my $img = Imager->new( data => \$data ) or croak Imager->errstr;
-    return $img if $img->getwidth == $width && $img->getheight == $height;
-    my $scaled
-      = $img->scale( xpixels => $width, ypixels => $height, type => $type )
-      || croak $img->errstr;
-    return $scaled;
+    return Imager->new( data => $res->decoded_content )
+      || croak Imager->errstr;
 }
 
 sub build_userpic ($self) {
-    my $url = $self->userpic_url;
-    return $url ? make_image( $url, 80, 80 ) : undef;
+    my $url = $self->userpic_url || return undef;
+    my $img = download_image($url);
+    return $img
+      if $img->getwidth == $self->userpic_width
+      && $img->getheight == $self->userpic_height;
+    my $userpic = $img->scale(
+        xpixels => $self->userpic_width,
+        ypixels => $self->userpic_height,
+        type    => 'nonprop',
+    ) || croak $img->errstr;
+    return $userpic;
 }
 
 1;
