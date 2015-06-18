@@ -4,7 +4,7 @@ Net::Profile - library to interact with API of social networks
 
 # VERSION
 
-version 0.001
+version 0.003
 
 # SYNOPSIS
 
