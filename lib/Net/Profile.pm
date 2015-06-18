@@ -73,7 +73,7 @@ sub download_image ($url) {
     croak "failed to download $url: " . $res->status_line
       if !$res->is_success;
     return Imager->new( data => $res->decoded_content )
-      || croak Imager->errstr;
+      || croak( Imager->errstr );
 }
 
 sub build_userpic ($self) {
@@ -86,7 +86,7 @@ sub build_userpic ($self) {
         xpixels => $self->userpic_width,
         ypixels => $self->userpic_height,
         type    => 'nonprop',
-    ) || croak $img->errstr;
+    ) || croak( $img->errstr );
     return $userpic;
 }
 
