@@ -24,7 +24,7 @@ sub build_me ($self) {
     my $uri = URI->new('https://api.vk.com/method/users.get');
     $uri->query_form(
         access_token => $self->access_token,
-        fields       => 'photo_100',
+        fields       => 'photo_100,photo_max_orig',
     );
     my $res = $ua->get($uri);
     croak "failed to download $uri: " . $res->status_line
@@ -44,6 +44,12 @@ sub build_url ($self) { 'http://vk.com/id' . $self->user_id }
 
 sub build_userpic_url ($self) {
     $self->me->{photo_100} =~ /camera/ ? undef : $self->me->{photo_100};
+}
+
+sub build_photo_url ($self) {
+    $self->me->{photo_max_orig} =~ /camera/
+      ? undef
+      : $self->me->{photo_max_orig};
 }
 
 1;

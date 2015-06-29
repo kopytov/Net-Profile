@@ -61,10 +61,31 @@ has userpic => (
     lazy    => 1,
 );
 
+has photo_url => (
+    is      => 'ro',
+    isa     => 'Str|Undef',
+    builder => 'build_photo_url',
+    lazy    => 1,
+);
+
+has photo_width => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 640,
+);
+
+has photo => (
+    is      => 'ro',
+    isa     => 'Object|Undef',
+    builder => 'build_photo',
+    lazy    => 1,
+);
+
 sub build_user_id     {...}
 sub build_name        {...}
 sub build_url         {...}
 sub build_userpic_url {...}
+sub build_photo_url   {...}
 
 our $ua = LWP::UserAgent->new;
 
@@ -88,6 +109,15 @@ sub build_userpic ($self) {
         type    => 'nonprop',
     ) || croak( $img->errstr );
     return $userpic;
+}
+
+sub build_photo ($self) {
+    my $url = $self->photo_url || return undef;
+    my $img = download_image($url);
+    return $img if $img->getwidth <= $self->photo_width;
+    my $photo = $img->scale( xpixels => $self->photo_width )
+      || croak( $img->errstr );
+    return $photo;
 }
 
 1;
