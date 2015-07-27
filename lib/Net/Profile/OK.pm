@@ -51,7 +51,7 @@ sub build_me ($self) {
         format          => 'JSON',
         access_token    => $self->access_token,
         application_key => $self->app_public,
-        fields          => 'uid,name,photo_id,pic190x190,pic1024x768',
+        fields          => 'uid,name,photo_id,pic190x190,pic640x480',
     };
     sign( $query, $self->app_secret );
     $uri->query_form($query);
@@ -71,7 +71,7 @@ sub build_userpic_url ($self) {
 }
 
 sub build_photo_url ($self) {
-    $self->me->{photo_id} ? $self->me->{pic1024x768} : undef;
+    $self->me->{photo_id} ? $self->me->{pic640x480} : undef;
 }
 
 1;
