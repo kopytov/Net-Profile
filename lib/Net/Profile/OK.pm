@@ -37,7 +37,7 @@ sub sign ( $query, $app_secret ) {
     my $sign_string  = '';
     my $access_token = delete $query->{access_token};
     my $secret_key   = lc md5_hex("$access_token$app_secret");
-    for my $key ( sort keys $query ) {
+    for my $key ( sort keys %$query ) {
         $sign_string .= "$key=$query->{$key}";
     }
     $sign_string .= $secret_key;
