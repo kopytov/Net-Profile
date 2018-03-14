@@ -20,11 +20,18 @@ has me => (
     lazy    => 1,
 );
 
+has version => (
+    is      => 'ro',
+    isa     => 'Str',
+    default => '5.73',
+);
+
 sub build_me ($self) {
     my $uri = URI->new('https://api.vk.com/method/users.get');
     $uri->query_form(
         access_token => $self->access_token,
         fields       => 'photo_100,photo_max_orig',
+        version      => $self->version,
     );
     my $res = $ua->get($uri);
     croak "failed to download $uri: " . $res->status_line
