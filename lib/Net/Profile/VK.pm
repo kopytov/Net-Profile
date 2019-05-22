@@ -23,7 +23,7 @@ has me => (
 has version => (
     is      => 'ro',
     isa     => 'Str',
-    default => '5.73',
+    default => '5.95',
 );
 
 sub build_me ($self) {
