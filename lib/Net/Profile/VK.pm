@@ -31,7 +31,7 @@ sub build_me ($self) {
     $uri->query_form(
         access_token => $self->access_token,
         fields       => 'photo_100,photo_max_orig',
-        version      => $self->version,
+        v            => $self->version,
     );
     my $res = $ua->get($uri);
     croak "failed to download $uri: " . $res->status_line
@@ -41,7 +41,7 @@ sub build_me ($self) {
     return $me->{response}[0];
 }
 
-sub build_user_id ($self) { $self->me->{uid} }
+sub build_user_id ($self) { $self->me->{id} }
 
 sub build_name ($self) {
     $self->me->{first_name} . q{ } . $self->me->{last_name};
