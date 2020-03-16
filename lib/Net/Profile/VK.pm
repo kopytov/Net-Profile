@@ -26,6 +26,8 @@ has version => (
     default => '5.95',
 );
 
+sub build_email ($self) { $self->token->{params}{email} }
+
 sub build_me ($self) {
     my $uri = URI->new('https://api.vk.com/method/users.get');
     $uri->query_form(
