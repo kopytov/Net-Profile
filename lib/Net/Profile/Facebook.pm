@@ -22,7 +22,10 @@ has me => (
 
 sub build_me ($self) {
     my $uri = URI->new('https://graph.facebook.com/me');
-    $uri->query_form( access_token => $self->access_token );
+    $uri->query_form(
+        access_token => $self->access_token,
+        fields       => 'id,name,email',
+    );
     my $res = $ua->get($uri);
     croak "failed to download $uri: " . $res->status_line
       if !$res->is_success;
@@ -33,6 +36,7 @@ sub build_me ($self) {
 
 sub build_user_id ($self) { $self->me->{id} }
 sub build_name ($self)    { $self->me->{name} }
+sub build_email ($self)   { $self->me->{email} }
 sub build_url ($self)     { $self->me->{link} || 'https://www.facebook.com/' . $self->user_id }
 
 sub picture_url ( $access_token, $width, $height ) {
