@@ -8,10 +8,16 @@ use Carp;
 use LWP::UserAgent;
 use Imager;
 
+has token => (
+    is       => 'ro',
+    isa      => 'Plack::Middleware::OAuth::AccessToken',
+);
+
 has access_token => (
     is       => 'ro',
     isa      => 'Str',
-    required => 1,
+    builder  => 'build_access_token',
+    lazy     => 1,
 );
 
 has user_id => (
@@ -25,6 +31,13 @@ has name => (
     is      => 'ro',
     isa     => 'Str',
     builder => 'build_name',
+    lazy    => 1,
+);
+
+has email => (
+    is      => 'ro',
+    isa     => 'Str',
+    builder => 'build_email',
     lazy    => 1,
 );
 
@@ -81,8 +94,11 @@ has photo => (
     lazy    => 1,
 );
 
+sub build_access_token ($self) { $self->token->access_token }
+
 sub build_user_id     {...}
 sub build_name        {...}
+sub build_email       {...}
 sub build_url         {...}
 sub build_userpic_url {...}
 sub build_photo_url   {...}
