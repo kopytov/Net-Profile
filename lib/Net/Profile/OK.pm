@@ -46,12 +46,12 @@ sub sign ( $query, $app_secret ) {
 }
 
 sub build_me ($self) {
-    my $uri   = URI->new('http://api.ok.ru/api/users/getCurrentUser');
+    my $uri   = URI->new('https://api.ok.ru/api/users/getCurrentUser');
     my $query = {
         format          => 'JSON',
         access_token    => $self->access_token,
         application_key => $self->app_public,
-        fields          => 'uid,name,photo_id,pic190x190,pic640x480',
+        fields          => 'UID,NAME,EMAIL,PHOTO_ID,PIC190x190,PIC640x480',
     };
     sign( $query, $self->app_secret );
     $uri->query_form($query);
@@ -64,6 +64,7 @@ sub build_me ($self) {
 
 sub build_user_id ($self) { $self->me->{uid} }
 sub build_name ($self)    { $self->me->{name} }
+sub build_email ($self)   { $self->me->{email} }
 sub build_url ($self)     { 'http://ok.ru/profile/' . $self->user_id }
 
 sub build_userpic_url ($self) {
